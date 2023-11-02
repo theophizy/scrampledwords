@@ -10,7 +10,7 @@ document.getElementById('redact-button').addEventListener('click', function () {
     document.getElementById('redacted-content').textContent = redactedContent;
 
     // Calculate and display statistics
-    const stats = getRedactionStats(content, redactedContent, startTime);
+    const stats = getRedactionStats(content, wordsToRedact, startTime);
     document.getElementById('stats').textContent = stats;
 });
 
@@ -24,13 +24,18 @@ function redactContent(content, wordsToRedact, replacementChar) {
 
 function getRedactionStats(originalContent, redactedContent,startTime) {
     const wordsScanned = originalContent.split(/\s+/).length;
-    const wordsRedacted = redactedContent.split(/\s+/).length;
-    const charactersRedacted = redactedContent.length;
+  
+    const wordsRedacted = getMatchedWords(redactedContent,originalContent); //redactedContent.split(/\s+/).length;
+    //const charactersRedacted = redactedContent.split(/\s+/).length;
 
     
     const endTime = new Date();
     const timeTaken = (endTime - startTime)/1000; // in seconds
 
-    return `Words Scanned: ${wordsScanned}, Words Redacted: ${wordsRedacted}, Characters Redacted: ${charactersRedacted}, Time Taken: ${timeTaken} seconds`;
+    return `Words Scanned: ${wordsScanned}, Words Redacted: ${wordsRedacted}, Time Taken: ${timeTaken} seconds`;//, Characters Redacted: ${charactersRedacted}
 }
 
+function getMatchedWords(words1, words2) {
+    const getword = words1.filter((text) => words2.includes(text)).length;
+    return getword;
+  }
