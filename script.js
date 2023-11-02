@@ -3,9 +3,9 @@ document.getElementById('redact-button').addEventListener('click', function () {
     const content = document.getElementById('content').value;
     
     const wordsToRedact = document.getElementById('wordsToRedact').value.split(' ');
-    alert(wordsToRedact)
+  
     const replacementChar = document.getElementById('replacementChar').value || '*';
-    alert(replacementChar)
+    
     const redactedContent = redactContent(content, wordsToRedact, replacementChar);
     document.getElementById('redacted-content').textContent = redactedContent;
 
