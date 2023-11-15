@@ -31,7 +31,7 @@ function getRedactionStats(originalContent, redactedContent) {
     const endTime = new Date();
     const timeTaken = (endTime - startTime); // in seconds
 
-    return `Words Scanned: ${wordsScanned}, Words Redacted: ${wordsRedacted}, Characters Redacted: ${charactersRedacted}, Time Taken: ${timeTaken} seconds`;
+    return `Words Scanned: ${wordsScanned}, Words Replaced: ${wordsRedacted}, Characters Redacted: ${charactersRedacted}, Time Taken: ${timeTaken} seconds`;
 }
 
 
