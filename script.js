@@ -1,16 +1,16 @@
 document.getElementById('redact-button').addEventListener('click', function () {
-    
+    const startTime = new Date();
     const content = document.getElementById('content').value;
     
     const wordsToRedact = document.getElementById('wordsToRedact').value.split(' ');
-    alert(wordsToRedact)
+  
     const replacementChar = document.getElementById('replacementChar').value || '*';
-    alert(replacementChar)
+    
     const redactedContent = redactContent(content, wordsToRedact, replacementChar);
     document.getElementById('redacted-content').textContent = redactedContent;
 
     // Calculate and display statistics
-    const stats = getRedactionStats(content, redactedContent);
+    const stats = getRedactionStats(content, wordsToRedact, startTime);
     document.getElementById('stats').textContent = stats;
 });
 
@@ -22,52 +22,20 @@ function redactContent(content, wordsToRedact, replacementChar) {
     return content;
 }
 
-function getRedactionStats(originalContent, redactedContent) {
+function getRedactionStats(originalContent, redactedContent,startTime) {
     const wordsScanned = originalContent.split(/\s+/).length;
-    const wordsRedacted = redactedContent.split(/\s+/).length;
-    const charactersRedacted = originalContent.length - redactedContent.length;
+  
+    const wordsRedacted = getMatchedWords(redactedContent,originalContent); //redactedContent.split(/\s+/).length;
+    //const charactersRedacted = redactedContent.split(/\s+/).length;
 
-    const startTime = new Date();
+    
     const endTime = new Date();
-    const timeTaken = (endTime - startTime); // in seconds
+    const timeTaken = (endTime - startTime)/1000; // in seconds
 
-    return `Words Scanned: ${wordsScanned}, Words Replaced: ${wordsRedacted}, Characters Redacted: ${charactersRedacted}, Time Taken: ${timeTaken} seconds`;
+    return `Words Scanned: ${wordsScanned}, Words Redacted: ${wordsRedacted}, Time Taken: ${timeTaken} seconds`;//, Characters Redacted: ${charactersRedacted}
 }
 
-
-
-
-
-// document.addEventListener("DOMContentLoaded", function() {
-//     const form = document.getElementById("scrambler-form");
-//     const originalText = document.getElementById("original-text");
-//     const wordsToScramble = document.getElementById("words-to-scramble");
-//     const redactButton = document.getElementById("redact-button");
-//     const scrambledText = document.getElementById("scrambled-text");
-//     const wordsScanned = document.getElementById("words-scanned");
-//     const wordsScrambled = document.getElementById("words-scrambled");
-//     const charactersScrambled = document.getElementById("characters-scrambled");
-//     const timeTaken = document.getElementById("time-taken");
-
-//     redactButton.addEventListener("click", function() {
-//         const startTime = Date.now();
-//         const originalContent = originalText.value;
-//         const words = wordsToScramble.value.split(" ");
-
-//         let scrambledContent = originalContent;
-
-//         words.forEach(word => {
-//             const regex = new RegExp(word, "g");
-//             scrambledContent = scrambledContent.replace(regex, "**");
-//         });
-
-//         const endTime = Date.now();
-//         const elapsedSeconds = (endTime - startTime) / 1000;
-
-//         scrambledText.textContent = scrambledContent;
-//         wordsScanned.textContent = originalContent.split(/\s+/).length;
-//         wordsScrambled.textContent = words.length;
-//         charactersScrambled.textContent = scrambledContent.length;
-//         timeTaken.textContent = elapsedSeconds.toFixed(2);
-//     });
-// });
+function getMatchedWords(words1, words2) {
+    const getword = words1.filter((text) => words2.includes(text)).length;
+    return getword;
+  }
